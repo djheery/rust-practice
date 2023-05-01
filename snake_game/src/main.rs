@@ -1,5 +1,5 @@
 extern crate sdl2;
-
+use rand::Rng; 
 use sdl2::event::Event;
 use sdl2::keyboard::Keycode;
 use sdl2::pixels::Color;
@@ -7,7 +7,6 @@ use std::time::Duration;
 use sdl2::rect::Rect;
 use sdl2::render::WindowCanvas;
 use sdl2::video::Window;
-// use core::ops::Add; 
 use std::ops::Add;
 
 const GRID_X_SIZE: i32 = 40; 
@@ -103,19 +102,43 @@ impl GameContext {
 
   pub fn next_tick(&mut self) {
     if let GameState::Paused = self.state { return; }
+    let check_is_food: bool = self.check_food_collision();
+    if check_is_food == true { 
+      let nh: Point = self.get_next_head_positon();
+      self.player_position.push(nh);
+      self.random_food_pos();
+    }
 
-    let head_position = self.player_position.first().unwrap(); 
-    let next_head_position = match self.player_direction {
-      PlayerDirection::Up => *head_position + Point(0, -1),
-      PlayerDirection::Down => *head_position + Point(0, 1),
-      PlayerDirection::Right => *head_position + Point(1, 0),
-      PlayerDirection::Left => *head_position + Point(-1, 0),
-    };
-
+    let next_head_position: Point = self.get_next_head_positon();
     self.player_position.pop();
     self.player_position.reverse();
     self.player_position.push(next_head_position);
     self.player_position.reverse();
+  }
+
+  fn check_food_collision(&mut self) -> bool {
+    let (food_x, food_y) = (self.food.0, self.food.1); 
+    let head = self.player_position.first().unwrap();
+    let (head_x, head_y) = (head.0, head.1);  
+    
+    food_x == head_x && food_y == head_y
+  }
+
+  fn get_next_head_positon(&mut self) -> Point {
+    let head_position = self.player_position.first().unwrap(); 
+    match self.player_direction {
+      PlayerDirection::Up => *head_position + Point(0, -1),
+      PlayerDirection::Down => *head_position + Point(0, 1),
+      PlayerDirection::Right => *head_position + Point(1, 0),
+      PlayerDirection::Left => *head_position + Point(-1, 0),
+    }
+  }
+
+  fn random_food_pos(&mut self) {
+    let x = rand::thread_rng().gen_range(1..=GRID_X_SIZE);
+    let y = rand::thread_rng().gen_range(1..=GRID_Y_SIZE);
+    println!("x{x},y{y}");
+    self.food = Point(x, y);
   }
 
   pub fn move_up(&mut self) {
@@ -187,7 +210,7 @@ pub fn main() -> Result<(), String> {
             }
         }
         frame_counter += 1; 
-        if frame_counter & 75 == 0 {
+        if frame_counter & 125 == 0 {
           context.next_tick();
           frame_counter = 0; 
         }
