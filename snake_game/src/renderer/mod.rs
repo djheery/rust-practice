@@ -43,6 +43,8 @@ impl Renderer {
 
     self.canvas.set_draw_color(color);
     self.canvas.clear();
+    self.canvas.set_draw_color(Color::RGB(255, 255, 255));
+    self.canvas.fill_rect(Rect::new(10, 10, 30, 30));
   }
 
   fn draw_player(&mut self, context: &GameContext) -> Result<(), String> {

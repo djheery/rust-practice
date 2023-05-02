@@ -4,11 +4,13 @@ use rand::Rng;
 use crate::GRID_X_SIZE; 
 use crate::GRID_Y_SIZE;
 
+#[derive(Debug)]
 pub enum GameState { Playing, Paused }
 
+#[derive(Debug)]
 pub enum PlayerDirection { Up, Down, Right, Left }
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Point(pub i32, pub i32);
 
 impl Add<Point> for Point {
@@ -18,20 +20,25 @@ impl Add<Point> for Point {
   }
 }
 
+#[derive(Debug)]
 pub struct GameContext {
   pub player_position: Vec<Point>,
   pub player_direction: PlayerDirection,
   pub food: Point,
   pub state: GameState,
+  pub score: u32,
+  pub game_over: bool,
 }
 
 impl GameContext {
   pub fn new() -> GameContext {
     GameContext {
-      player_position: vec![Point(5, 1), Point(5, 2), Point(5, 3)],
+      player_position: vec![Point(4, 3), Point(5, 3), Point(6, 3)],
       player_direction: PlayerDirection::Down, 
       state: GameState::Paused,
-      food: Point(10, 12)
+      food: Point(10, 12),
+      score: 0,
+      game_over: false,
     }
   }
 
@@ -45,10 +52,20 @@ impl GameContext {
   pub fn next_tick(&mut self) {
     if let GameState::Paused = self.state { return; }
     let check_is_food: bool = self.check_food_collision();
+    let is_out_of_bounds = self.check_out_of_bounds();
+    let has_collided_with_self = self.check_snake_collide();
+
+    if is_out_of_bounds || has_collided_with_self {
+      self.game_over = false; 
+      return;
+    }
+
     if check_is_food == true { 
       let nh: Point = self.get_next_head_positon();
       self.player_position.push(nh);
+      self.score += 1;
       self.random_food_pos();
+      println!("{}", self.score);
     }
 
     let next_head_position: Point = self.get_next_head_positon();
@@ -66,6 +83,34 @@ impl GameContext {
     food_x == head_x && food_y == head_y
   }
 
+  fn check_out_of_bounds(&self) -> bool {
+    let head = self.player_position.first().unwrap();
+    
+    head.0 > (GRID_X_SIZE - 1) 
+    || head.1 > (GRID_Y_SIZE - 1) 
+    || head.0 < 0 
+    || head.1 < 0
+  }
+
+  fn check_snake_collide(&self) -> bool {
+    let head = &self.player_position[0];
+    let vec: &Vec<Point> = &self.player_position;
+    let mut has_collided = false; 
+    // println!("Head: {},{}", head.0, head.1);
+    for tail in vec.iter().skip(1) {
+      // println!("{:?}",tail);
+      let check_x = head.0 == tail.0; 
+      let check_y = head.1 == tail.1; 
+      if check_x && check_y { 
+        // println!("Tail: {:?} Head: {:?}", tail, head);
+        has_collided = true;
+        break; 
+      }
+    }
+
+    has_collided
+  }
+
   fn get_next_head_positon(&mut self) -> Point {
     let head_position = self.player_position.first().unwrap(); 
     match self.player_direction {
@@ -79,7 +124,6 @@ impl GameContext {
   fn random_food_pos(&mut self) {
     let x = rand::thread_rng().gen_range(1..=GRID_X_SIZE - 1);
     let y = rand::thread_rng().gen_range(1..=GRID_Y_SIZE - 1);
-    println!("x{x},y{y}");
     self.food = Point(x, y);
   }
 

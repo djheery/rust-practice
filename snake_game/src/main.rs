@@ -7,9 +7,9 @@ use std::time::Duration;
 use crate::renderer::Renderer;
 use crate::game_context::GameContext;
 
-const GRID_X_SIZE: i32 = 40; 
-const GRID_Y_SIZE: i32 = 30;
-const DOT_SIZE_IN_PXS: i32 = 20; 
+const GRID_X_SIZE: i32 = 40 + 20; 
+const GRID_Y_SIZE: i32 = 30 + 20;
+const DOT_SIZE_IN_PXS: i32 = 15; 
 
 
 pub fn main() -> Result<(), String> {
@@ -21,6 +21,7 @@ pub fn main() -> Result<(), String> {
     let window = video_subsystem
         .window("Snake Game", x.try_into().unwrap(), y.try_into().unwrap())
         .position_centered()
+        .allow_highdpi()
         .opengl()
         .build()
         .map_err(|e| e.to_string())?;
@@ -37,18 +38,27 @@ pub fn main() -> Result<(), String> {
                 Event::KeyDown { keycode: Some(keycode), .. } => {
                   match keycode {
                     Keycode::W => context.move_up(),
+                    Keycode::Up => context.move_up(),
                     Keycode::A => context.move_left(),
+                    Keycode::Left => context.move_left(),
                     Keycode::S => context.move_down(),
+                    Keycode::Down => context.move_down(),
                     Keycode::D => context.move_right(),
+                    Keycode::Right => context.move_right(),
                     Keycode::Escape => context.toggle_pause(),
                     _ => {}
                   }
                 }
                 _ => {}
             }
+
+            if context.game_over == true {
+              context.toggle_pause();
+            }
         }
+
         frame_counter += 1; 
-        if frame_counter & 125 == 0 {
+        if frame_counter & 145 == 0 {
           context.next_tick();
           frame_counter = 0; 
         }

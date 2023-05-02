@@ -1,0 +1,1 @@
+/home/danielheery/Documents/programming/rust_practice/screen_layout/target/debug/screen_layout: /home/danielheery/Documents/programming/rust_practice/screen_layout/src/main.rs /home/danielheery/Documents/programming/rust_practice/screen_layout/src/renderer/mod.rs
