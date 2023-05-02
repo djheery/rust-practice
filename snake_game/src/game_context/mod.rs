@@ -31,7 +31,7 @@ impl GameContext {
       player_position: vec![Point(5, 1), Point(5, 2), Point(5, 3)],
       player_direction: PlayerDirection::Down, 
       state: GameState::Paused,
-      food: Point(3, 3)
+      food: Point(10, 12)
     }
   }
 
@@ -77,8 +77,8 @@ impl GameContext {
   }
 
   fn random_food_pos(&mut self) {
-    let x = rand::thread_rng().gen_range(1..=GRID_X_SIZE);
-    let y = rand::thread_rng().gen_range(1..=GRID_Y_SIZE);
+    let x = rand::thread_rng().gen_range(1..=GRID_X_SIZE - 1);
+    let y = rand::thread_rng().gen_range(1..=GRID_Y_SIZE - 1);
     println!("x{x},y{y}");
     self.food = Point(x, y);
   }

@@ -9,9 +9,13 @@ The tutorial can be found: https://blog.logrocket.com/using-sdl2-bindings-rust/
 - [ ] Implement collisions 
   - [ ] Walls 
   - [X] Food 
+  - [ ] Snake 
 - [X] Grow the snake on eating food 
-- [ ] Increment the score 
-- [ ] store high scores 
-- [ ] Separate file out into modules 
+- [X] Separate file out into modules 
+- [X] Stop Food Rendering off screen
+- [ ] Scoring System 
+  - [ ] Increment the score 
+  - [ ] Show the current Score
+  - [ ] store high scores 
 - [ ] Use sprites instead of block colour 
 - [ ] Add speed manipulation component/ level up system 
