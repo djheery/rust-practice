@@ -6,12 +6,12 @@ The tutorial can be found: https://blog.logrocket.com/using-sdl2-bindings-rust/
 
 ## Todo 
 
-[] Implement collisions 
-  [] Walls 
-  [] Food 
-[] Grow the snake on eating food 
-[] Increment the score 
-[] store high scores 
-[] Separate file out into modules 
-[] Use sprites instead of block colour 
-[] Add speed manipulation component/ level up system 
+- [] Implement collisions 
+  - [] Walls 
+  - [] Food 
+- [] Grow the snake on eating food 
+- [] Increment the score 
+- [] store high scores 
+- [] Separate file out into modules 
+- [] Use sprites instead of block colour 
+- [] Add speed manipulation component/ level up system 
