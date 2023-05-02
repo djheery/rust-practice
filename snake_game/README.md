@@ -7,7 +7,7 @@ The tutorial can be found: https://blog.logrocket.com/using-sdl2-bindings-rust/
 ## Todo 
 
 - [ ] Implement collisions 
-  - [ ] Walls 
+  - [X] Walls 
   - [ ] Food 
 - [ ] Grow the snake on eating food 
 - [ ] Increment the score 
