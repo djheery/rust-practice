@@ -11,7 +11,7 @@ pub enum PlayerDirection { Up, Down, Right, Left }
 pub struct Point(pub i32, pub i32);
 
 impl Add<Point> for Point {
-  type Ouput = Point; 
+  type Output = Point;
   fn add(self, rhs: Point) -> Self::Output {
     Point(self.0 + rhs.0, self.1 + rhs.1)
   }
@@ -30,7 +30,7 @@ pub struct GameContext {
 impl GameContext {
   pub fn new() -> GameContext {
     GameContext {
-      player_position: vec![Point(2, 2), Point(3, 2), Point(4, 2)], 
+      player_position: vec![Point(2, 2), Point(2, 3), Point(2, 4)], 
       player_direction: PlayerDirection::Left, 
       food: Point(10, 12),
       play_state: GamePlayState::Paused,
@@ -45,8 +45,40 @@ impl GameContext {
 
   pub fn toggle_pause(&mut self) { 
     match self.play_state {
-      GamePlayState::Paused => { self.play_state = GamePlayState.Playing },
-      GamePlayState::Playing => { self.play_state = GamePlayState.Paused },
+      GamePlayState::Paused => { self.play_state = GamePlayState::Playing },
+      GamePlayState::Playing => { self.play_state = GamePlayState::Paused },
+    }
+  }
+
+  pub fn move_down(&mut self) {
+    match self.player_direction {
+      PlayerDirection::Up => {},
+      PlayerDirection::Down => {}
+      _ => { self.player_direction = PlayerDirection::Down }
+    }
+  }
+
+  pub fn move_up(&mut self) {
+    match self.player_direction {
+      PlayerDirection::Up => {},
+      PlayerDirection::Down => {},
+      _ => { self.player_direction = PlayerDirection::Up }
+    }
+  }
+
+  pub fn move_right(&mut self) {
+    match self.player_direction {
+      PlayerDirection::Left => {},
+      PlayerDirection::Right => {},
+      _ => { self.player_direction = PlayerDirection::Right }
+    }
+  }
+
+  pub fn move_left(&mut self) {
+    match self.player_direction {
+      PlayerDirection::Left => {},
+      PlayerDirection::Right => {},
+      _ => { self.player_direction = PlayerDirection::Left }
     }
   }
 }

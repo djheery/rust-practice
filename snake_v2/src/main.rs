@@ -5,6 +5,7 @@ use sdl2::event::Event;
 use sdl2::keyboard::Keycode; 
 use std::time::Duration; 
 use crate::renderer::Renderer; 
+use crate::game_context::GameContext;
 
 const SCREEN_WIDTH: u32 = 800; 
 const SCREEN_HEIGHT: u32 = 700; 
@@ -21,8 +22,10 @@ fn main() -> Result<(), String> {
               .map_err(|e| e.to_string())?; 
 
   let mut renderer = Renderer::new(window)?; 
+  let mut game_context = GameContext::new();
   let mut event_pump = sdl_context.event_pump()?;
-  let mut _frame_counter = 0;
+  let mut frame_counter = 0;
+  renderer.draw(&game_context)?; 
 
   'running: loop {
     for event in event_pump.poll_iter() {
@@ -32,7 +35,12 @@ fn main() -> Result<(), String> {
       }
     }
 
-    renderer.initialize_window(); 
+    frame_conter += 1; 
+    if frame_counter == 30 {
+      game_context.tick();
+      frame_counter = 0;
+    }
+   
     ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 40));
   }
 

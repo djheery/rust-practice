@@ -7,8 +7,8 @@ use std::time::Duration;
 use crate::renderer::Renderer;
 use crate::game_context::GameContext;
 
-const GRID_X_SIZE: i32 = 40 + 20; 
-const GRID_Y_SIZE: i32 = 30 + 20;
+const GRID_X_SIZE: i32 = 40; 
+const GRID_Y_SIZE: i32 = 30;
 const DOT_SIZE_IN_PXS: i32 = 15; 
 
 
