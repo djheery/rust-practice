@@ -1,6 +1,7 @@
 extern crate sdl2; 
 mod renderer; 
 mod game_context; 
+mod ui;
 use sdl2::event::Event; 
 use sdl2::keyboard::Keycode; 
 use std::time::Duration; 
@@ -31,16 +32,31 @@ fn main() -> Result<(), String> {
     for event in event_pump.poll_iter() {
       match event {
         Event::Quit { .. } => break 'running,
+        Event::KeyDown { keycode: Some(keycode), .. } => {
+          match keycode {
+            Keycode::W => game_context.move_up(),
+            Keycode::Up => game_context.move_up(), 
+            Keycode::A => game_context.move_left(),
+            Keycode::Left => game_context.move_left(), 
+            Keycode::S => game_context.move_down(), 
+            Keycode::Down => game_context.move_down(), 
+            Keycode::D => game_context.move_right(), 
+            Keycode::Right => game_context.move_right(), 
+            Keycode::Escape => game_context.toggle_pause(),
+            _ => {}
+          }
+        } 
         _ => {}
       }
     }
 
-    frame_conter += 1; 
-    if frame_counter == 30 {
+    frame_counter += 1; 
+    if frame_counter == 2 {
       game_context.tick();
       frame_counter = 0;
     }
-   
+    
+    renderer.draw(&game_context)?;
     ::std::thread::sleep(Duration::new(0, 1_000_000_000u32 / 40));
   }
 

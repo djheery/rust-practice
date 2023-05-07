@@ -30,8 +30,8 @@ pub struct GameContext {
 impl GameContext {
   pub fn new() -> GameContext {
     GameContext {
-      player_position: vec![Point(2, 2), Point(2, 3), Point(2, 4)], 
-      player_direction: PlayerDirection::Left, 
+      player_position: vec![Point(2, 4), Point(2, 3), Point(2, 2)], 
+      player_direction: PlayerDirection::Right, 
       food: Point(10, 12),
       play_state: GamePlayState::Paused,
       score: 0, 
@@ -40,8 +40,14 @@ impl GameContext {
   }
 
   pub fn tick(&mut self) {
-
+    let next_head_position: Point = self.get_next_head_positon();
+    self.player_position.pop();
+    self.player_position.reverse();
+    self.player_position.push(next_head_position);
+    self.player_position.reverse();
   }
+
+  
 
   pub fn toggle_pause(&mut self) { 
     match self.play_state {
@@ -79,6 +85,16 @@ impl GameContext {
       PlayerDirection::Left => {},
       PlayerDirection::Right => {},
       _ => { self.player_direction = PlayerDirection::Left }
+    }
+  }
+
+  fn get_next_head_positon(&mut self) -> Point { 
+    let head_position = self.player_position.first().unwrap(); 
+    match self.player_direction {
+      PlayerDirection::Up => *head_position + Point(0, -1),
+      PlayerDirection::Down => *head_position + Point(0, 1),
+      PlayerDirection::Right => *head_position + Point(1, 0),
+      PlayerDirection::Left => *head_position + Point(-1, 0),
     }
   }
 }

@@ -4,12 +4,15 @@ use sdl2::rect::Rect;
 use sdl2::video::Window; 
 use crate::game_context::GameContext;
 use crate::game_context::Point; 
+use crate::ui::UiNumberDisplay; 
+use crate::ui::UiNumber;
 
 const BOARD_HEIGHT: u32 = 600; 
 const BOARD_WIDTH: u32 = 800; 
 const BOARD_Y: u32 = 100; 
 const HEADER_HEIGHT: u32 = 75; 
 const HEADER_WIDTH: u32 = 800;
+
 
 pub struct Renderer { canvas: WindowCanvas }
 
@@ -25,17 +28,57 @@ impl Renderer {
   pub fn draw(&mut self, game_context: &GameContext) -> Result<(), String> {
     self.canvas.set_draw_color(Color::RGB(0, 0, 0));
     self.canvas.clear();
-    self.draw_header(); 
+    self.draw_header()?; 
     self.draw_snake(game_context)?;
     self.draw_food(game_context)?;
+    self.draw_score();
     self.canvas.present();
     Ok(())
   }
 
-  fn draw_header(&mut self) {
+  fn draw_header(&mut self) -> Result<(), String> {
     let header = Rect::new(0, 0, HEADER_WIDTH, HEADER_HEIGHT);
     self.canvas.set_draw_color(Color::RGB(44, 44, 55)); 
-    self.canvas.fill_rect(header);
+    self.canvas.fill_rect(header)?;
+    Ok(())
+  }
+
+  fn draw_score(&mut self) -> Result<(), String> {
+    let num1 = UiNumber::Six; 
+    let num2 = UiNumber::Nine; 
+    let n1 = UiNumberDisplay::new(num1); 
+    let n2 = UiNumberDisplay::new(num2);
+    let mut x: i32 = 10; 
+    let mut y: i32 = 10;
+    self.canvas.set_draw_color(Color::RED); 
+    for r in n1.matrix_representation.iter() {
+      for c in r.iter() {
+        if *c == 1 {
+          let rect = Rect::new(x, y, 5, 5);
+          self.canvas.fill_rect(rect);
+        } 
+        x += 5; 
+      }
+      x = 10; 
+      y += 5;
+    }
+
+    x = 30;
+    y = 10; 
+
+    for r in n2.matrix_representation.iter() {
+      for c in r.iter() {
+        if *c == 1 {
+          let rect = Rect::new(x, y, 5, 5);
+          self.canvas.fill_rect(rect);
+        } 
+        x += 5; 
+      }
+      x = 30; 
+      y += 5;
+    }
+
+    Ok(())
   }
 
   fn draw_snake(&mut self, game_context: &GameContext) -> Result<(), String> {
