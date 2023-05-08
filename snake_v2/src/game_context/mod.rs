@@ -40,14 +40,22 @@ impl GameContext {
   }
 
   pub fn tick(&mut self) {
+    if self.play_state == GamePlayState::Paused { return; }
     let next_head_position: Point = self.get_next_head_positon();
+
+    // Check for collision with food 
+    // Check for Pause state 
+    // Check for collision with self
+
     self.player_position.pop();
     self.player_position.reverse();
     self.player_position.push(next_head_position);
     self.player_position.reverse();
   }
 
-  
+  fn check_food_collison(&mut self, next_head_position: &Point) {
+    
+  }
 
   pub fn toggle_pause(&mut self) { 
     match self.play_state {

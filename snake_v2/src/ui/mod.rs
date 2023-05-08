@@ -13,7 +13,7 @@ pub enum UiNumber {
 
 pub struct UiNumberDisplay {
   pub current_num: u8,
-  pub matrix_representation: [[u8; 5]; 5]
+  pub matrix_representation: [[u8; 5]; 7]
 }
 
 impl UiNumberDisplay {
@@ -29,9 +29,11 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
         current_num: 0, 
         matrix_representation: [
           [0, 1, 1, 1, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 0, 1, 0],
+          [1, 1, 0, 1, 1],
+          [1, 1, 0, 1, 1],
+          [1, 1, 0, 1, 1],
+          [1, 1, 0, 1, 1],
+          [1, 1, 0, 1, 1],
           [0, 1, 1, 1, 0],
         ]
       }
@@ -40,11 +42,13 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
       UiNumberDisplay {
         current_num: 1, 
         matrix_representation: [
-          [0, 1, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
+          [0, 0, 1, 1, 0],
           [0, 1, 1, 1, 0],
+          [0, 0, 1, 1, 0],
+          [0, 0, 1, 1, 0],
+          [0, 0, 1, 1, 0],
+          [0, 0, 1, 1, 0],
+          [0, 1, 1, 1, 1],
         ]
       }
     },
@@ -53,10 +57,12 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
         current_num: 2, 
         matrix_representation: [
           [0, 1, 1, 1, 0],
-          [0, 0, 0, 1, 0],
+          [1, 1, 0, 1, 1],
+          [0, 0, 0, 1, 1],
           [0, 1, 1, 1, 0],
-          [0, 1, 0, 0, 0],
-          [0, 1, 1, 1, 0],
+          [1, 1, 0, 0, 0],
+          [1, 1, 0, 0, 0],
+          [0, 1, 1, 1, 1],
         ]
       }
     },
@@ -65,10 +71,12 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
         current_num: 3, 
         matrix_representation: [
           [0, 1, 1, 1, 0],
-          [0, 0, 0, 1, 0],
+          [1, 1, 0, 1, 1],
+          [0, 0, 0, 1, 1],
           [0, 1, 1, 1, 0],
           [0, 0, 0, 1, 0],
-          [0, 1, 1, 1, 0],
+          [1, 1, 0, 1, 1],
+          [0, 1, 1, 1, 1],
         ]
       }
     },
@@ -76,11 +84,13 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
       UiNumberDisplay {
         current_num: 4, 
         matrix_representation: [
-          [0, 1, 0, 1, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 1, 1, 0],
-          [0, 0, 0, 1, 0],
-          [0, 0, 0, 1, 0],
+          [1, 1, 0, 1, 1],
+          [0, 1, 0, 0, 1],
+          [0, 1, 0, 0, 1],
+          [0, 1, 1, 1, 1],
+          [0, 0, 0, 0, 1],
+          [0, 0, 0, 0, 1],
+          [0, 0, 0, 0, 1],
         ]
       }
     },
@@ -88,11 +98,13 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
       UiNumberDisplay {
         current_num: 5, 
         matrix_representation: [
-          [0, 1, 1, 1, 0],
-          [0, 1, 0, 0, 0],
-          [0, 1, 1, 1, 0],
-          [0, 0, 0, 1, 0],
-          [0, 1, 1, 1, 0],
+          [1, 1, 1, 1, 1],
+          [1, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0],
+          [1, 1, 1, 1, 0],
+          [0, 0, 0, 0, 1],
+          [0, 0, 0, 0, 1],
+          [1, 1, 1, 1, 0],
         ]
       }
     },
@@ -101,9 +113,11 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
         current_num: 6, 
         matrix_representation: [
           [0, 1, 1, 1, 0],
-          [0, 1, 0, 0, 0],
-          [0, 1, 1, 1, 0],
-          [0, 1, 0, 1, 0],
+          [1, 0, 0, 0, 1],
+          [1, 0, 0, 0, 0],
+          [1, 1, 1, 1, 0],
+          [1, 0, 0, 0, 1],
+          [1, 0, 0, 0, 1],
           [0, 1, 1, 1, 0],
         ]
       }
@@ -112,11 +126,13 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
       UiNumberDisplay {
         current_num: 7, 
         matrix_representation: [
-          [0, 1, 1, 1, 0],
+          [1, 1, 1, 1, 1],
+          [0, 0, 0, 1, 1],
           [0, 0, 0, 1, 0],
-          [0, 0, 1, 1, 1],
-          [0, 1, 0, 1, 0],
-          [0, 1, 1, 1, 0],
+          [0, 0, 1, 1, 0],
+          [0, 1, 1, 0, 0],
+          [0, 1, 1, 0, 0],
+          [0, 1, 1, 0, 0],
         ]
       }
     },
@@ -125,9 +141,11 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
         current_num: 0, 
         matrix_representation: [
           [0, 1, 1, 1, 0],
-          [0, 1, 0, 1, 0],
+          [1, 1, 0, 1, 1],
+          [1, 1, 0, 1, 1],
           [0, 1, 1, 1, 0],
-          [0, 1, 0, 1, 0],
+          [1, 1, 0, 1, 1],
+          [1, 1, 0, 1, 1],
           [0, 1, 1, 1, 0],
         ]
       }
@@ -137,10 +155,12 @@ fn get_number(number: UiNumber) -> UiNumberDisplay {
         current_num: 0, 
         matrix_representation: [
           [0, 1, 1, 1, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 1, 1, 0],
-          [0, 0, 0, 1, 0],
-          [0, 1, 1, 1, 0],
+          [1, 1, 0, 1, 1],
+          [1, 1, 0, 1, 1],
+          [0, 1, 1, 1, 1],
+          [0, 0, 0, 1, 1],
+          [0, 0, 0, 1, 1],
+          [1, 1, 1, 1, 0],
         ]
       }
     },

@@ -44,37 +44,32 @@ impl Renderer {
   }
 
   fn draw_score(&mut self) -> Result<(), String> {
-    let num1 = UiNumber::Six; 
-    let num2 = UiNumber::Nine; 
-    let n1 = UiNumberDisplay::new(num1); 
-    let n2 = UiNumberDisplay::new(num2);
-    let mut x: i32 = 10; 
-    let mut y: i32 = 10;
+    let n1 = UiNumberDisplay::new(UiNumber::Zero); 
+    let n2 = UiNumberDisplay::new(UiNumber::Zero);
+    self.draw_score_pixels(n1, 0)?;
+    self.draw_score_pixels(n2, 1)?;
+
+    Ok(())
+  }
+
+  fn draw_score_pixels(&mut self, num: UiNumberDisplay, score_index: u8) -> Result<(), String> {
+    let mut x = 10;
+    let mut y = 10;
+    
+    if score_index == 1 { x = 40 };
+
     self.canvas.set_draw_color(Color::RED); 
-    for r in n1.matrix_representation.iter() {
+    for r in num.matrix_representation.iter() {
       for c in r.iter() {
         if *c == 1 {
           let rect = Rect::new(x, y, 5, 5);
-          self.canvas.fill_rect(rect);
+          self.canvas.fill_rect(rect)?;
         } 
         x += 5; 
       }
-      x = 10; 
-      y += 5;
-    }
 
-    x = 30;
-    y = 10; 
-
-    for r in n2.matrix_representation.iter() {
-      for c in r.iter() {
-        if *c == 1 {
-          let rect = Rect::new(x, y, 5, 5);
-          self.canvas.fill_rect(rect);
-        } 
-        x += 5; 
-      }
-      x = 30; 
+      if score_index == 1 { x = 40; } 
+      else { x = 10; }
       y += 5;
     }
 
