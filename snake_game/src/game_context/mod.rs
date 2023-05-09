@@ -4,7 +4,7 @@ use rand::Rng;
 use crate::GRID_X_SIZE; 
 use crate::GRID_Y_SIZE;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum GameState { Playing, Paused }
 
 #[derive(Debug)]

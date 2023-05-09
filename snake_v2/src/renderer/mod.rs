@@ -31,7 +31,7 @@ impl Renderer {
     self.draw_header()?; 
     self.draw_snake(game_context)?;
     self.draw_food(game_context)?;
-    self.draw_score();
+    self.draw_score(game_context)?;
     self.canvas.present();
     Ok(())
   }
@@ -43,13 +43,32 @@ impl Renderer {
     Ok(())
   }
 
-  fn draw_score(&mut self) -> Result<(), String> {
-    let n1 = UiNumberDisplay::new(UiNumber::Zero); 
-    let n2 = UiNumberDisplay::new(UiNumber::Zero);
+  fn draw_score(&mut self, game_context: &GameContext) -> Result<(), String> {
+    let idx_zero: u32 = (game_context.score / 10).try_into().unwrap();
+    let idx_two: u32 = (game_context.score - (idx_zero * 10)).try_into().unwrap(); 
+
+    let n1 = UiNumberDisplay::new(self.get_ui_number(idx_zero)); 
+    let n2 = UiNumberDisplay::new(self.get_ui_number(idx_two));
     self.draw_score_pixels(n1, 0)?;
     self.draw_score_pixels(n2, 1)?;
 
     Ok(())
+  }
+
+  fn get_ui_number(&mut self, score: u32) -> UiNumber {
+    match score {
+      0 => UiNumber::Zero, 
+      1 => UiNumber::One, 
+      2 => UiNumber::Two, 
+      3 => UiNumber::Three, 
+      4 => UiNumber::Four, 
+      5 => UiNumber::Five, 
+      6 => UiNumber::Six, 
+      7 => UiNumber::Seven,
+      8 => UiNumber::Eight, 
+      9 => UiNumber::Nine,
+      _ => UiNumber::Zero,
+    }
   }
 
   fn draw_score_pixels(&mut self, num: UiNumberDisplay, score_index: u8) -> Result<(), String> {

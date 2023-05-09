@@ -15,7 +15,7 @@ The tutorial can be found: https://blog.logrocket.com/using-sdl2-bindings-rust/
 - [X] Stop Food Rendering off screen
 - [ ] Scoring System 
   - [X] Increment the score 
-  - [ ] Show the current Score
+  - [X] Show the current Score
   - [ ] store high scores
 - [X] Layout 
   - [X] Render A Layout (Heading/ Board)
